@@ -4,6 +4,7 @@ import {
   readFile,
   writeFile,
 } from '../helpers/file-helpers';
+import CounterText from './CounterText';
 
 const DATABASE_PATH = '/src/database.json';
 
@@ -23,11 +24,18 @@ writeFile(
 );
 */
 
+
 function Home() {
+  const file = readFile(DATABASE_PATH)
+  let parsedFile = JSON.parse(file)
+  parsedFile.hits++
+  const stringifiedFile = JSON.stringify(parsedFile)
+  writeFile(DATABASE_PATH, stringifiedFile)
+
   return (
     <main>
       <h1>Welcome!</h1>
-      <p>You are visitor number X.</p>
+      <CounterText hits={parsedFile.hits} />
     </main>
   );
 }
